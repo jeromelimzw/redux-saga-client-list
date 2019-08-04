@@ -8,10 +8,11 @@ import "./styles.css";
 class EditPage extends Component {
   constructor(props) {
     super(props);
+    const { firstName, lastName, telNo } = this.props.details;
     this.state = {
-      firstName: "",
-      lastName: "",
-      telNo: ""
+      firstName: firstName,
+      lastName: lastName,
+      telNo: telNo
     };
   }
   handleSubmit = event => {
@@ -27,11 +28,13 @@ class EditPage extends Component {
   };
 
   render() {
+    const { firstName, lastName, telNo } = this.state;
     return (
       <React.Fragment>
         <Typography variant="h3">Edit Details</Typography>
         <form noValidate autoComplete="off" className="form">
           <TextField
+            defaultValue={firstName}
             name="firstName"
             label="First Name"
             onChange={this.handleChange}
@@ -39,19 +42,17 @@ class EditPage extends Component {
           <br />
 
           <TextField
+            defaultValue={lastName}
             name="lastName"
             label="Last Name"
             onChange={this.handleChange}
-
-            // onChange={this.handleChange("lastName")}
           />
           <br />
           <TextField
+            defaultValue={telNo}
             name="telNo"
             label="Tel. No."
             onChange={this.handleChange}
-
-            // onChange={this.handleChange("telNo")}
           />
           <br />
           <br />
@@ -64,7 +65,11 @@ class EditPage extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return state;
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   { editDetails }
 )(withRouter(EditPage));

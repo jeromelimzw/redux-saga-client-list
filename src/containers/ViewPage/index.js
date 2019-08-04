@@ -24,7 +24,6 @@ class ViewPage extends Component {
 
   render() {
     const { firstName, lastName, telNo } = this.props.details;
-    console.log(this.props.details);
     return (
       <React.Fragment>
         <Typography variant="h3">Client Details</Typography>

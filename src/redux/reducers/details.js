@@ -9,6 +9,7 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case EDIT_DETAILS: {
+      console.log("reducer:details");
       const { firstName, lastName, telNo } = action.payload;
       return {
         ...state,
