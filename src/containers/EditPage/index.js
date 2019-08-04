@@ -2,27 +2,32 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Typography, Button, TextField } from "@material-ui/core";
 import { connect } from "react-redux";
-import { editDetails } from "../../redux/actions";
+import { editDetails, addNew } from "../../redux/actions";
 import "./styles.css";
 
 class EditPage extends Component {
   constructor(props) {
     super(props);
-    const { firstName, lastName, telNo } = this.props.details;
-    this.state = {
-      firstName: firstName,
-      lastName: lastName,
-      telNo: telNo
-    };
+    this.state = {};
   }
   handleSubmit = event => {
-    const { firstName, lastName, telNo } = this.state;
     event.preventDefault();
-    if (firstName !== "" || lastName !== "" || telNo !== "") {
-      this.props.editDetails(this.state);
+    const { firstName, lastName, telNo } = this.state;
+    if (
+      firstName !== undefined ||
+      lastName !== undefined ||
+      telNo !== undefined
+    ) {
+      this.props.addNew(this.state);
       this.props.history.push("/view");
     }
   };
+
+  handleGoBack = event => {
+    event.preventDefault();
+    this.props.history.push("/view");
+  };
+
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
@@ -33,6 +38,7 @@ class EditPage extends Component {
       <React.Fragment>
         <Typography variant="h3">Edit Details</Typography>
         <form noValidate autoComplete="off" className="form">
+          <br />
           <TextField
             defaultValue={firstName}
             name="firstName"
@@ -60,6 +66,9 @@ class EditPage extends Component {
             Submit Changes
           </Button>
         </form>
+        <Button color="primary" onClick={this.handleGoBack}>
+          Back to Client List
+        </Button>
       </React.Fragment>
     );
   }
@@ -71,5 +80,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { editDetails }
+  { editDetails, addNew }
 )(withRouter(EditPage));

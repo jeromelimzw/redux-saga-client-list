@@ -1,23 +1,23 @@
-import { EDIT_DETAILS } from "../constants";
+import { ADD_NEW, ADD_RANDOM, REMOVE_CLIENT } from "../constants";
+let counter = 0;
 
-const initialState = {
-  firstName: "Mark",
-  lastName: "Garrett",
-  telNo: "234-344"
-};
+const initialState = { list: [], random: {} };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case EDIT_DETAILS: {
-      console.log("reducer:details");
-      const { firstName, lastName, telNo } = action.payload;
-      return {
-        ...state,
-        firstName,
-        lastName,
-        telNo
-      };
+    case ADD_NEW: {
+      counter++;
+      const newState = [...state.list, { ...action.payload, id: counter }];
+      return { ...state.random, list: newState };
     }
+    case ADD_RANDOM: {
+      return state;
+    }
+    case REMOVE_CLIENT: {
+      const newState = [...state.list.filter(a => a.id !== action.payload)];
+      return { ...state.random, list: newState };
+    }
+
     default:
       return state;
   }
